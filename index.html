@@ -6,7 +6,7 @@
 <meta name="description" content="Software stopped being a product. Doctors are next. Build an app for one person, watch AI take over code, run a clinic simulator, and close India's doctor gap.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Built for One · Software stopped being a product. Doctors are next.">
-<meta property="og:description" content="Interactive: build an app for one person, watch AI take over Google's code, and close India's doctor gap with one slider.">
+<meta property="og:description" content="Build an app for one person. Watch AI take over Google's code. Run a clinic and close India's doctor gap.">
 <meta property="og:url" content="https://shubham-sahu.me/built-for-one/">
 <meta property="og:image" content="https://shubham-sahu.me/built-for-one/og.png">
 <meta property="og:image:width" content="1200">
@@ -18,690 +18,459 @@
 <body>
 <title>Built for One</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Tiro+Devanagari+Hindi&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@500;700&display=swap">
 <style>
-/* Layout: dark "stages" (canvas toys) alternate with a narrow text column; act 1 software, act 2 healthcare; every toy opens in a live state. */
+/* Layout: Swiss grid. Each scene = left column (headline + controls + one big live number), right column (the toy). Four scenes, few words. */
 :root{
-  --bg:#070912; --panel:#0D1120; --panel2:#141A30; --line:#232A47; --ink:#EEF0FA; --muted:#8C94B0; --dim:#4A5272;
-  --accent:#7C8CFF; --accent-hi:#B9C1FF; --coral:#FF6B54; --mint:#3FD9A0; --amber:#FFC24B;
-  --s-bg:#F6F7FB; --s-ink:#0E1220; --s-muted:#5A6178; --s-line:#E1E4EE; --s-acc:#2B3FE0; --s-red:#D2361F; --s-green:#11804D;
-  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
-  --body:"Hanken Grotesk",ui-sans-serif,system-ui,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  --hindi:"Tiro Devanagari Hindi","Noto Sans Devanagari",serif;
-  color-scheme:dark;
+  --bg:#F8FAFC; --surface:#FFFFFF; --fg:#020617; --muted:#475569; --line:#E2E8F0; --soft:#E8ECF1;
+  --accent:#0369A1; --on-accent:#FFFFFF; --danger:#DC2626; --ok:#15803D;
+  --s-bg:#FFFFFF; --s-fg:#020617; --s-muted:#64748B; --s-line:#E2E8F0; --s-acc:#0369A1; --s-red:#DC2626; --s-green:#15803D;
+  --display:"Inter Tight",Inter,system-ui,sans-serif; --body:Inter,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --hindi:"Noto Sans Devanagari",Inter,sans-serif;
 }
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#020617; --surface:#0B1222; --fg:#F1F5F9; --muted:#94A3B8; --line:#1E293B; --soft:#162033;
+  --accent:#38BDF8; --on-accent:#020617; --danger:#F87171; --ok:#4ADE80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#020617; --surface:#0B1222; --fg:#F1F5F9; --muted:#94A3B8; --line:#1E293B; --soft:#162033;
+  --accent:#38BDF8; --on-accent:#020617; --danger:#F87171; --ok:#4ADE80; color-scheme:dark}
+
 *{box-sizing:border-box}
-html{background:var(--bg)}
-body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);padding-inline:16px;padding-block:0 80px;overflow-x:hidden}
-.page{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:96px}
-.col{max-width:720px;display:flex;flex-direction:column;gap:16px}
-h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:.98;text-wrap:balance;margin:0}
-h1{font-size:clamp(46px,7.4vw,96px)}
-h2{font-size:clamp(34px,5.4vw,64px)}
-h3{font-size:22px;letter-spacing:-.01em;line-height:1.15}
-p{margin:0;max-width:62ch}
-.lede{font-size:clamp(18px,2vw,21px);color:var(--muted)}
-.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-.mono{font-family:var(--mono)}
-.note{font:400 12px/1.6 var(--mono);color:var(--muted);max-width:80ch}
-.hl{color:var(--accent)} .co{color:var(--coral)} .mi{color:var(--mint)}
-button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+body{background:var(--bg);color:var(--fg);font:400 16px/1.5 var(--body);padding-inline:20px;padding-block:0 48px;-webkit-font-smoothing:antialiased}
+.page{max-width:1200px;margin:0 auto}
+h1,h2{font-family:var(--display);font-weight:600;letter-spacing:-.045em;line-height:.95;margin:0;text-wrap:balance}
+h1{font-size:clamp(44px,6.2vw,88px)}
+h2{font-size:clamp(34px,4.4vw,60px)}
+p{margin:0}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cap{font:400 12px/1.5 var(--mono);color:var(--muted)}
+.lead{font-size:18px;color:var(--muted);max-width:34ch}
 
 /* nav */
-nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;background:linear-gradient(var(--bg) 70%,transparent);font:600 13px var(--mono);margin-bottom:-60px}
-.prog{flex:1;max-width:320px;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
-.prog i{display:block;height:100%;width:0;background:var(--accent)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;align-items:center;justify-content:space-between;gap:20px;height:56px;background:var(--bg);border-bottom:1px solid var(--line);font:500 13px var(--body)}
+.prog{position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--fg)}
 
-/* stages */
-.stage{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}
-.stage canvas{display:block;width:100%;height:100%}
+/* scene grid */
+.scene{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;padding-block:96px;border-bottom:1px solid var(--line);align-items:start}
+.side{display:flex;flex-direction:column;gap:28px;position:sticky;top:96px}
+.toy{min-width:0}
+@media (max-width:900px){.scene{grid-template-columns:1fr;gap:32px;padding-block:64px}.side{position:static}}
 
 /* hero */
-.hero{height:640px}
-.scrim{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(13,17,32,.92) 0%,rgba(13,17,32,.7) 34%,rgba(13,17,32,0) 58%)}
-.hero canvas{position:absolute;inset:0}
-.hero-copy{position:relative;z-index:2;max-width:560px;padding:56px 44px;display:flex;flex-direction:column;gap:22px;pointer-events:none}
-.hero-copy > *{pointer-events:auto}
-.hero-copy .lede{max-width:40ch}
-.seg{display:inline-flex;flex-wrap:wrap;gap:6px;background:rgba(7,9,18,.7);border:1px solid var(--line);border-radius:999px;padding:5px;align-self:flex-start;backdrop-filter:blur(6px)}
-.seg button{border:0;background:transparent;border-radius:999px;padding:9px 16px;font:600 14px var(--body);color:var(--muted);cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-.hero-read{position:absolute;z-index:2;right:22px;bottom:18px;font:600 13px var(--mono);color:var(--accent-hi);background:rgba(7,9,18,.72);padding:8px 12px;border-radius:8px;border:1px solid var(--line)}
-.hero h1{font-size:clamp(46px,6.4vw,82px)}
-.hint{position:absolute;z-index:2;right:22px;top:20px;font:400 12px var(--mono);color:var(--dim)}
-@media (max-width:700px){
-  .hero{height:700px}
-  .hero-copy{padding:36px 22px}
-  .hint{display:none}
-  .scrim{background:linear-gradient(180deg,rgba(13,17,32,.94) 0%,rgba(13,17,32,.75) 48%,rgba(13,17,32,0) 62%)}
-  .hero-read{left:16px;right:auto}
-}
+.hero{padding-block:72px 64px;align-items:end}
+.hero h1 .next{display:block;color:var(--accent)}
+.seg{display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--fg);align-self:flex-start}
+.seg button{min-height:44px;padding:0 22px;border:0;background:transparent;cursor:pointer;font:600 14px var(--body);transition:background .2s,color .2s}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.field{position:relative;aspect-ratio:1/1;width:100%;max-height:620px;border:1px solid var(--line);background:var(--surface);touch-action:pan-y;cursor:crosshair}
+.field canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.readout{display:flex;justify-content:space-between;gap:16px;margin-top:12px}
+.readout b{font:500 13px var(--mono)}
 
-/* lab */
-.lab{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:36px}
-.lab-left{display:flex;flex-direction:column;gap:20px;min-width:0}
-#askForm{display:flex;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:6px}
-#ask{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:500 17px var(--body);padding:10px 12px}
-#ask::placeholder{color:var(--dim)}
+/* build */
+#askForm{display:flex;border:1px solid var(--fg);background:var(--surface)}
+#ask{flex:1;min-width:0;border:0;background:transparent;padding:0 16px;min-height:52px;font-size:17px}
 #ask:focus{outline:none}
-#askForm:focus-within{border-color:var(--accent)}
-.go{border:0;border-radius:10px;background:var(--accent);color:#070912;font:700 15px var(--body);padding:10px 20px;cursor:pointer}
+#askForm:focus-within{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.go{border:0;background:var(--fg);color:var(--bg);padding:0 24px;font-weight:600;cursor:pointer;min-height:52px;transition:opacity .2s}
+.go:hover{opacity:.85}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:7px 13px;font:500 14px var(--body);color:var(--ink);cursor:pointer}
-.chip:hover{border-color:var(--accent)}
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.steps li{font:600 11px/1.3 var(--mono);color:var(--dim);border-top:2px solid var(--line);padding-top:8px;transition:color .2s,border-color .2s}
-.steps li.on{color:var(--mint);border-color:var(--mint)}
-.lab-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
-.lab-stats div{background:var(--bg);padding:14px;display:flex;flex-direction:column;gap:2px}
-.lab-stats b{font:800 30px/1 var(--display);font-variant-numeric:tabular-nums}
-.lab-stats span{font:400 12px var(--mono);color:var(--muted)}
-.phone{width:100%;max-width:340px;aspect-ratio:9/18.5;border-radius:44px;background:#1A1F33;padding:12px;box-shadow:0 0 0 1px var(--line),0 40px 80px -20px rgba(124,140,255,.35);position:relative;justify-self:center}
-.screen{width:100%;height:100%;border-radius:34px;overflow:hidden;background:var(--s-bg);color:var(--s-ink);position:relative;font:400 15px/1.45 var(--body)}
-.notch{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:90px;height:22px;border-radius:12px;background:#0A0C14;z-index:3}
-.codestream{position:absolute;inset:0;background:#0A0C14;color:var(--accent-hi);font:400 11.5px/1.65 var(--mono);padding:56px 18px 18px;white-space:pre-wrap;word-break:break-word}
-.codestream .k{color:var(--coral)} .codestream .s{color:var(--mint)}
-.app{position:absolute;inset:0;padding:54px 18px 18px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
-@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:none;opacity:1}}
-.a-h{font:800 22px/1.1 var(--display);letter-spacing:-.02em}
-.a-sub{font:500 12px var(--mono);color:var(--s-muted)}
-.hi-t{font-family:var(--hindi);font-weight:400}
-.a-big{font:800 64px/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.a-card{background:#fff;border:1px solid var(--s-line);border-radius:16px;padding:14px}
+.chip{min-height:40px;padding:0 14px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:14px;transition:border-color .2s,background .2s}
+.chip:hover{border-color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.stage-phone{display:grid;place-items:center;background:var(--soft);padding:48px 20px;min-height:100%}
+.phone{width:min(330px,100%);aspect-ratio:9/18.5;border-radius:46px;border:1px solid var(--line);background:#020617;padding:9px;position:relative}
+.screen{width:100%;height:100%;border-radius:38px;overflow:hidden;background:var(--s-bg);color:var(--s-fg);position:relative;font:400 15px/1.45 var(--body)}
+.notch{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:84px;height:22px;border-radius:12px;background:#020617;z-index:3}
+.code{position:absolute;inset:0;background:#020617;color:#CBD5E1;font:400 11.5px/1.7 var(--mono);padding:58px 20px 20px;white-space:pre-wrap;word-break:break-word}
+.code .k{color:#38BDF8}.code .c{color:#64748B}
+.app{position:absolute;inset:0;padding:56px 18px 18px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;animation:rise .4s cubic-bezier(.2,.9,.3,1.15)}
+@keyframes rise{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.a-h{font:700 22px/1.1 var(--display);letter-spacing:-.03em}
+.a-sub{font:500 12px var(--body);color:var(--s-muted)}
+.hi{font-family:var(--hindi)}
+.a-big{font:700 64px/1 var(--display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.a-card{border:1px solid var(--s-line);border-radius:14px;padding:14px}
 .a-row{display:flex;gap:8px;align-items:center}
-.a-in{flex:1;min-width:0;border:1px solid var(--s-line);border-radius:10px;padding:9px 10px;font:600 16px var(--body);background:#fff;color:var(--s-ink)}
-.a-btn{border:0;border-radius:10px;padding:10px 12px;font:700 13px var(--body);background:var(--s-ink);color:#fff;cursor:pointer;white-space:nowrap}
+.a-in{flex:1;min-width:0;border:1px solid var(--s-line);border-radius:10px;padding:0 10px;min-height:44px;font:600 16px var(--body);background:#fff;color:var(--s-fg)}
+.a-btn{border:0;border-radius:10px;min-height:44px;padding:0 12px;font:700 13px var(--body);background:var(--s-fg);color:#fff;cursor:pointer;white-space:nowrap}
 .a-btn.alt{background:var(--s-acc)}
-.a-list{display:flex;flex-direction:column}
-.a-li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--s-line);font-variant-numeric:tabular-nums;gap:8px}
-.tag{font:700 11px var(--mono);padding:3px 8px;border-radius:999px;white-space:nowrap}
-.tag.ok{color:var(--s-green);background:#E3F5EC} .tag.bad{color:var(--s-red);background:#FDE6E2}
-.a-foot{margin-top:auto;font:500 11px var(--mono);color:var(--s-muted);display:flex;justify-content:space-between}
+.a-li{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--s-line);font-variant-numeric:tabular-nums;gap:8px}
+.tag{font:700 11px var(--body);padding:4px 9px;border-radius:999px;white-space:nowrap}
+.tag.ok{color:var(--s-green);background:#DCFCE7}.tag.bad{color:var(--s-red);background:#FEE2E2}
 .glasses{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.glass{aspect-ratio:3/4;border:2px solid var(--s-acc);border-radius:6px 6px 12px 12px;background:#fff;position:relative;overflow:hidden;cursor:pointer;padding:0}
-.glass i{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--s-acc);transition:height .35s}
+.glass{aspect-ratio:3/4;border:2px solid var(--s-acc);border-radius:4px 4px 12px 12px;background:#fff;position:relative;overflow:hidden;cursor:pointer;padding:0}
+.glass i{position:absolute;inset:auto 0 0 0;height:0;background:var(--s-acc);transition:height .3s}
 .glass.on i{height:85%}
 .hgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.hgrid button{aspect-ratio:1;border:0;border-radius:6px;background:var(--s-line);cursor:pointer;padding:0}
+.hgrid button{aspect-ratio:1;border:0;border-radius:5px;background:var(--s-line);cursor:pointer;padding:0;transition:background .15s}
 .hgrid button.on{background:var(--s-green)}
-.chk{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--s-line);cursor:pointer}
+.chk{display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid var(--s-line);cursor:pointer}
 .chk input{width:20px;height:20px;accent-color:var(--s-green)}
-input[type=range].a-rng{width:100%;accent-color:var(--s-acc)}
+.a-rng{width:100%;accent-color:var(--s-acc)}
+
+/* numbers */
+.big{font:600 clamp(80px,11vw,152px)/.85 var(--display);letter-spacing:-.06em;font-variant-numeric:tabular-nums;transition:color .3s}
+.pill{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;padding:4px 8px;align-self:flex-start}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+.metrics div{padding:16px 16px 0 0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.metrics b{font:600 clamp(30px,3.4vw,44px)/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums;transition:color .3s}
+.metrics span{font-size:13px;color:var(--muted)}
 
 /* code wall */
-.wall{height:460px}
-.wall-read{position:absolute;left:24px;top:22px;z-index:2;background:rgba(7,9,18,.82);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:4px;backdrop-filter:blur(4px)}
-.wall-read b{font:800 clamp(56px,9vw,104px)/.9 var(--display);letter-spacing:-.05em;color:var(--accent);font-variant-numeric:tabular-nums}
-.wall-read span{font:600 13px var(--mono);color:var(--muted)}
-.wall-read .tagp{align-self:flex-start;font:700 11px var(--mono);padding:3px 8px;border-radius:999px;background:var(--panel2);color:var(--ink)}
-.wall-read .tagp.proj{background:rgba(255,194,75,.15);color:var(--amber)}
-.scrub{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center}
-.play{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:10px 18px;font:700 14px var(--body);cursor:pointer}
-.rng{width:100%;accent-color:var(--accent)}
-.spark{grid-column:2;width:100%;height:56px;display:block}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font:400 12px var(--mono);color:var(--muted)}
-.legend span{display:inline-flex;gap:8px;align-items:center}
-.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
-
-/* stats + counters */
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.stat{background:var(--panel);padding:24px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.stat .n{font:800 clamp(40px,5vw,60px)/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.stat .l{font-size:15px;color:var(--muted);line-height:1.4}
-.stat .s{font:400 11px var(--mono);color:var(--dim)}
-.counters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.counter{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;gap:8px;min-width:0;position:relative;overflow:hidden}
-.counter b{font:800 clamp(44px,6.4vw,84px)/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.counter .pulse{width:10px;height:10px;border-radius:50%;background:var(--coral);display:inline-block;margin-right:8px;animation:pl 1.2s infinite}
-@keyframes pl{50%{opacity:.25}}
-@media (max-width:760px){.stats,.counters{grid-template-columns:1fr}}
+.wall{position:relative;height:440px;background:var(--surface);border:1px solid var(--line)}
+.wall canvas,.clinic canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scrub{display:flex;align-items:center;gap:16px;margin-top:16px}
+.play{min-width:44px;min-height:44px;border:1px solid var(--fg);background:transparent;cursor:pointer;display:grid;place-items:center}
+.play svg{width:14px;height:14px;fill:currentColor}
+input[type=range].rng{flex:1;min-width:0;accent-color:var(--fg);height:44px}
+.ticks{display:flex;justify-content:space-between;margin-left:60px}
 
 /* clinic */
-.clinic{height:440px}
-.ctrl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end}
-.ctrl label{font:600 13px var(--mono);color:var(--muted);display:flex;flex-direction:column;gap:10px}
-.ctrl label b{color:var(--ink)}
-.rush{border:1px solid var(--coral);color:var(--coral);background:transparent;border-radius:999px;padding:10px 18px;font:700 14px var(--body);cursor:pointer}
-.rush[aria-pressed="true"]{background:var(--coral);color:var(--bg)}
-.ctiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.ctiles div{background:var(--panel);padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.ctiles b{font:800 34px/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.02em;transition:color .3s}
-.ctiles span{font:400 12px var(--mono);color:var(--muted)}
-@media (max-width:760px){.ctiles{grid-template-columns:repeat(2,minmax(0,1fr))}.clinic{height:380px}}
+.clinic{position:relative;height:460px;background:var(--surface);border:1px solid var(--line)}
+.ctl{display:flex;flex-direction:column;gap:8px}
+.ctl label{display:flex;justify-content:space-between;font-weight:500}
+.rushbtn{min-height:44px;padding:0 18px;border:1px solid var(--line);background:transparent;cursor:pointer;font-weight:600;align-self:flex-start;transition:border-color .2s}
+.rushbtn:hover{border-color:var(--fg)}
+.rushbtn[aria-pressed="true"]{border-color:var(--danger);color:var(--danger)}
+@media (max-width:600px){.wall{height:340px}.clinic{height:380px}}
 
-/* dots */
-.dotwrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px}
-.dotcv{width:100%;aspect-ratio:16/10;display:block}
-.dside{display:flex;flex-direction:column;gap:18px;min-width:0}
-.verdict{font:800 30px/1.1 var(--display);letter-spacing:-.02em;transition:color .3s}
-.dleg{display:flex;flex-direction:column;gap:8px;font:400 13px var(--mono);color:var(--muted)}
-.dleg span{display:flex;gap:10px;align-items:center}
-.dleg i{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
-.bignum{font:800 64px/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-@media (max-width:860px){.lab,.dotwrap{grid-template-columns:1fr}.lab{padding:20px}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
-/* end */
-.end{padding:64px 40px;border-radius:22px;background:radial-gradient(120% 140% at 0% 0%,#1B2257 0%,var(--panel) 55%);border:1px solid var(--line);display:flex;flex-direction:column;gap:26px}
-.end h2{font-size:clamp(40px,7vw,88px)}
-.vote{display:flex;flex-wrap:wrap;gap:10px}
-.vote button{border:1px solid var(--line);background:rgba(7,9,18,.6);border-radius:999px;padding:10px 18px;font:600 15px var(--body);cursor:pointer}
-.vote button[aria-pressed="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-.sources{font-size:13px;color:var(--muted)}
-.sources ol{padding-left:20px;margin:10px 0 0;display:flex;flex-direction:column;gap:6px}
-.sources a{color:var(--accent-hi)}
-.act{display:flex;flex-direction:column;gap:28px}
-hr{border:0;border-top:1px solid var(--line);margin:0}
+/* close */
+.close{padding-block:120px 64px;display:flex;flex-direction:column;gap:40px}
+.close h2{font-size:clamp(44px,7vw,104px);max-width:14ch}
+.close h2 em{font-style:normal;color:var(--accent)}
+details{border-top:1px solid var(--line);padding-top:16px;max-width:760px}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details ol{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--muted)}
+details a{color:var(--fg);text-underline-offset:3px}
+footer{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
 <div class="page">
-  <nav class="top"><span>Shubham Sahu</span><span class="prog"><i id="prog"></i></span><span>Oct 2026</span></nav>
+  <nav><span>Shubham Sahu</span><span class="cap">Built for One</span><i class="prog" id="prog"></i></nav>
 
-  <!-- HERO -->
-  <section class="stage hero" id="hero" aria-label="Particle field: one app for a million people versus one app per person">
-    <canvas id="heroCv"></canvas><div class="scrim"></div>
-    <div class="hero-copy">
-      <span class="eyebrow">Two shifts, one cause</span>
-      <h1>Software stopped being a product.</h1>
-      <p class="lede">For 40 years, one app served a million people. Now one person gets their own app, made the moment they need it.</p>
+  <!-- 1 · HERO -->
+  <section class="scene hero">
+    <div class="side">
+      <h1>Software stopped being a product. <span class="next">Doctors are next.</span></h1>
       <div class="seg" role="group" aria-label="Switch era">
         <button id="mThen" aria-pressed="true">Then</button>
         <button id="mNow" aria-pressed="false">Now</button>
       </div>
     </div>
-    <div class="hero-read" id="heroRead">1 app · 1,000,000 people</div>
-    <div class="hint">Move your cursor through it</div>
+    <div class="toy">
+      <div class="field" id="field"><canvas id="heroCv" aria-label="One app shared by a million people becomes a million apps, one per person"></canvas></div>
+      <div class="readout"><b id="heroRead">1 app → 1,000,000 people</b><span class="cap">Touch it</span></div>
+    </div>
   </section>
 
-  <!-- LAB -->
-  <section class="act">
-    <div class="col">
-      <span class="eyebrow">Play · Build lab</span>
-      <h2>Describe a problem. Get an app built for one.</h2>
-      <p class="lede">My dad is diabetic. No company will build an app just for him. The market is one person. Type something you'd want for yourself or your family.</p>
-    </div>
-    <div class="lab">
-      <div class="lab-left">
-        <form id="askForm" autocomplete="off">
-          <label for="ask" class="sr">What do you need?</label>
-          <input id="ask" maxlength="90" placeholder="e.g. sugar log for my dad, in Hindi">
-          <button class="go" type="submit">Build</button>
-        </form>
-        <div class="chips" id="chips">
-          <button class="chip">Sugar log for my diabetic dad</button>
-          <button class="chip">Split our Goa trip, 4 friends</button>
-          <button class="chip">Water reminder for my mom</button>
-          <button class="chip">Pill tracker for grandpa</button>
-          <button class="chip">Exam countdown for JEE</button>
-          <button class="chip">Monthly budget on ₹50,000</button>
-          <button class="chip">Gym habit streak</button>
-        </div>
-        <ol class="steps" id="steps"><li>Reading request</li><li>Picking parts</li><li>Writing code</li><li>Shipping to 1 user</li></ol>
-        <div class="lab-stats">
-          <div><b id="sTime">0.0s</b><span>build time</span></div>
-          <div><b>1</b><span>user</span></div>
-          <div><b id="sCount">0</b><span>apps you built</span></div>
-        </div>
-        <p class="note">Demo: apps assemble in your browser from prebuilt parts to show the idea. Real AI builders like Lovable or Claude write fresh code and take a few minutes. Everything inside the phone works. Tap it.</p>
+  <!-- 2 · BUILD -->
+  <section class="scene">
+    <div class="side">
+      <h2>Describe it. It exists.</h2>
+      <p class="lead">My dad is diabetic. No company will build an app just for him. Now nobody has to.</p>
+      <form id="askForm" autocomplete="off">
+        <label for="ask" class="sr">Describe an app</label>
+        <input id="ask" maxlength="90" placeholder="Describe an app">
+        <button class="go" type="submit">Build</button>
+      </form>
+      <div class="chips" id="chips">
+        <button class="chip" aria-pressed="true">Sugar log for dad</button>
+        <button class="chip" aria-pressed="false">Goa trip split</button>
+        <button class="chip" aria-pressed="false">Mom's water</button>
+        <button class="chip" aria-pressed="false">Grandpa's pills</button>
+        <button class="chip" aria-pressed="false">Budget on ₹50k</button>
       </div>
+    </div>
+    <div class="toy stage-phone">
       <div class="phone"><div class="notch"></div><div class="screen" id="screen"></div></div>
     </div>
   </section>
 
-  <!-- CODE WALL -->
-  <section class="act">
-    <div class="col">
-      <span class="eyebrow">Proof · Google's codebase</span>
-      <h2>Watch AI take over the code.</h2>
-      <p class="lede">Each bar is a line of new code at Google. Grey means a human wrote it. Blue means AI did. Drag through time or press play.</p>
+  <!-- 3 · CODE -->
+  <section class="scene">
+    <div class="side">
+      <h2>AI now writes most of Google's new code.</h2>
+      <div class="big" id="wallPct">25%</div>
+      <div style="display:flex;gap:12px;align-items:center"><span class="pill" id="wallTag">Reported</span><span class="cap" id="wallDate">Oct 2024</span></div>
     </div>
-    <div class="stage wall">
-      <canvas id="wallCv"></canvas>
-      <div class="wall-read"><span class="tagp" id="wallTag">Reported</span><b id="wallPct">25%</b><span id="wallDate">Oct 2024</span></div>
-    </div>
-    <div class="scrub">
-      <button class="play" id="wallPlay">▶ Play</button>
-      <label for="when" class="sr">Timeline</label>
-      <input id="when" class="rng" type="range" min="0" max="30" step="0.1" value="0">
-      <svg class="spark" id="wallSpark" viewBox="0 0 600 56" preserveAspectRatio="none" aria-hidden="true"></svg>
-    </div>
-    <div class="legend"><span><i style="background:#3A4160"></i>Written by a human</span><span><i style="background:var(--accent)"></i>Written by AI</span><span><i style="background:var(--amber)"></i>After Apr 2026: my projection</span></div>
-    <p class="note">Reported by Sundar Pichai: more than 25% (Oct 2024), about 50% (fall 2025), 75% (Apr 2026). Beyond that the curve is my logistic extrapolation, capped at 95%. It's not a Google forecast.</p>
-
-    <div class="stats">
-      <div class="stat"><span class="n">50M</span><span class="l">apps built on Lovable alone</span><span class="s">Lovable Build Economy report, Jun 2026</span></div>
-      <div class="stat"><span class="n">80%</span><span class="l">of those builders call themselves non-technical</span><span class="s">Lovable user survey, May 2026 (self-reported)</span></div>
-      <div class="stat"><span class="n">$400M</span><span class="l">yearly revenue for Lovable, about 15 months after launch</span><span class="s">Bloomberg, Mar 2026</span></div>
-    </div>
-  </section>
-
-  <!-- COUNTERS -->
-  <section class="act">
-    <div class="col">
-      <span class="eyebrow">Live · Since you opened this page</span>
-      <h2>The world isn't waiting.</h2>
-    </div>
-    <div class="counters">
-      <div class="counter"><span class="mono" style="font-size:12px;color:var(--muted)"><i class="pulse"></i>APPS BUILT ON LOVABLE</span><b id="cApps">0</b><span class="note">At about 100,000 new projects a day (TechCrunch, 2026).</span></div>
-      <div class="counter"><span class="mono" style="font-size:12px;color:var(--muted)"><i class="pulse"></i>HEALTH QUESTIONS ASKED TO CHATGPT</span><b id="cHealth" class="co">0</b><span class="note">At 230 million people a week (OpenAI, Jan 2026). Counted as one question each.</span></div>
-    </div>
-  </section>
-
-  <hr>
-
-  <!-- ACT 2 -->
-  <section class="act">
-    <div class="col">
-      <span class="eyebrow">Act 2 · Healthcare</span>
-      <h2>We will never train enough doctors. <span class="hl">We won't need to.</span></h2>
-      <p class="lede">The person my dad depends on most isn't an app. It's his doctor. And that system is about to break too.</p>
-    </div>
-    <div class="stats">
-      <div class="stat"><span class="n co">11.1M</span><span class="l">health workers the world will be short by 2030</span><span class="s">WHO, Sep 2026</span></div>
-      <div class="stat"><span class="n">1 : 1,445</span><span class="l">allopathic doctors to people in India. The WHO norm is 1 : 1,000</span><span class="s">Govt. of India, reply in Parliament</span></div>
-      <div class="stat"><span class="n">81% <span style="color:var(--dim);font-size:.6em">vs 71%</span></span><span class="l">diagnostic accuracy, AI vs general clinicians, on case vignettes</span><span class="s">Meta-analysis, 2026</span></div>
-    </div>
-  </section>
-
-  <!-- CLINIC SIM -->
-  <section class="act">
-    <div class="col">
-      <span class="eyebrow">Play · Clinic simulator</span>
-      <h2>One clinic. Four doctors. Too many patients.</h2>
-      <p class="lede">Patients keep arriving. Blue dots are routine visits: refills, sugar reports, follow-ups. Yellow dots are the hard cases. Turn up AI triage and watch the waiting room.</p>
-    </div>
-    <div class="stage clinic"><canvas id="clinicCv"></canvas></div>
-    <div class="ctrl">
-      <label for="aiShare">AI handles routine visits: <b id="aiV">0%</b>
-        <input id="aiShare" class="rng" type="range" min="0" max="100" step="1" value="0">
-      </label>
-      <button class="rush" id="rush" aria-pressed="false">Monsoon rush</button>
-    </div>
-    <div class="ctiles">
-      <div><b id="tWait">0</b><span>waiting now</span></div>
-      <div><b id="tAvg">0 min</b><span>average wait</span></div>
-      <div><b id="tAway" class="co">0</b><span>sent home unseen</span></div>
-      <div><b id="tHard">0%</b><span>doctor time on hard cases</span></div>
-    </div>
-    <p class="note">Toy model: 7 in 10 visits routine (assumption), routine visit 5 min, hard case 15 min. It shows queueing behaviour, not real clinic data.</p>
-  </section>
-
-  <!-- DOTS -->
-  <section class="act">
-    <div class="col">
-      <span class="eyebrow">Play · India's doctor gap</span>
-      <h2>1,460 dots. Each one is 1,000 doctors.</h2>
-      <p class="lede">India has about 1.01 million allopathic doctors for 1.46 billion people. The WHO norm needs 1.46 million. Slide to hand routine work to AI.</p>
-    </div>
-    <div class="dotwrap">
-      <canvas id="dotCv" class="dotcv" aria-label="Dot grid of India's doctors needed versus available"></canvas>
-      <div class="dside">
-        <label for="dShare" class="mono" style="font-size:13px;color:var(--muted)">Routine work handled by AI: <b id="dV" style="color:var(--ink)">0%</b></label>
-        <input id="dShare" class="rng" type="range" min="0" max="60" step="1" value="0">
-        <div><div class="bignum" id="dNeed">1.46M</div><div class="note">doctors needed</div></div>
-        <p class="verdict" id="dVerdict"></p>
-        <div class="dleg">
-          <span><i style="background:var(--ink)"></i>Doctors we have, working</span>
-          <span><i style="border:2px solid var(--coral)"></i>Doctors missing</span>
-          <span><i style="background:var(--mint)"></i>Freed up for hard cases</span>
-        </div>
+    <div class="toy">
+      <div class="wall"><canvas id="wallCv" aria-label="Each bar is a line of new code; blue bars were written by AI"></canvas></div>
+      <div class="scrub">
+        <button class="play" id="wallPlay" aria-label="Play"><svg viewBox="0 0 14 14" id="playIcon"><path d="M2 1l11 6-11 6z"/></svg></button>
+        <label for="when" class="sr">Timeline</label>
+        <input id="when" class="rng" type="range" min="0" max="30" step="0.1" value="0">
       </div>
+      <div class="ticks cap"><span>2024</span><span>2025</span><span>2026</span><span>2027</span></div>
     </div>
-    <p class="note">Model: doctors needed = 1.46M × (1 − AI share). Simple on purpose. Real gains depend on rural access, regulation and trust.</p>
   </section>
 
-  <!-- END -->
-  <section class="end">
-    <span class="eyebrow">The common root</span>
-    <h2>When intelligence gets cheap, everything gets <span class="hl">personal.</span></h2>
-    <p class="lede">Software for one. Doctors for the hard cases. Which industry goes personal next?</p>
-    <div class="vote" id="vote">
-      <button aria-pressed="false">Education</button><button aria-pressed="false">Law</button><button aria-pressed="false">Banking</button><button aria-pressed="false">Insurance</button><button aria-pressed="false">Media</button><button aria-pressed="false">Retail</button>
+  <!-- 4 · CLINIC -->
+  <section class="scene">
+    <div class="side">
+      <h2>Four doctors. Too many patients.</h2>
+      <div class="ctl">
+        <label for="aiShare"><span>AI takes routine visits</span><b id="aiV">0%</b></label>
+        <input id="aiShare" class="rng" type="range" min="0" max="100" step="1" value="0">
+      </div>
+      <div class="metrics">
+        <div><b id="tWait">0</b><span>waiting</span></div>
+        <div><b id="tAway">0</b><span>sent home</span></div>
+        <div><b id="tGap">450K</b><span>India's doctor gap</span></div>
+      </div>
+      <button class="rushbtn" id="rush" aria-pressed="false">Monsoon rush</button>
     </div>
-    <p class="mono" id="voteMsg" style="font-size:14px;color:var(--accent-hi);min-height:1.5em"></p>
+    <div class="toy">
+      <div class="clinic"><canvas id="clinicCv" aria-label="Clinic simulation: patients queue for four doctors; an AI lane takes routine visits"></canvas></div>
+      <p class="cap" style="margin-top:12px">Grey: routine visit. Dark: hard case. Blue: handled by AI.</p>
+    </div>
   </section>
 
-  <section class="sources">
-    <b style="color:var(--ink)">Sources</b>
-    <ol>
-      <li><a href="https://www.secondtalent.com/resources/how-much-software-written-by-ai/">Google AI-written code share, 2024 to 2026 (summary of Sundar Pichai's remarks)</a></li>
-      <li><a href="https://thenextweb.com/news/lovable-build-economy-500m-arr-vibe-coding">Lovable Build Economy report: 50M projects, 80% non-technical</a></li>
-      <li><a href="https://en.wikipedia.org/wiki/Lovable_(company)">Lovable revenue milestones</a></li>
-      <li><a href="https://museumofvibecoding.org/vibe-coding-statistics-the-complete-2026-research-compendium-unbiased-research-2026/">About 100,000 new Lovable projects a day</a></li>
-      <li><a href="https://allwork.space/2026/09/who-warns-aging-workforce-could-leave-67-countries-short-of-health-workers-by-2030/">WHO: 11.1M health worker shortage by 2030</a></li>
-      <li><a href="https://thenextweb.com/news/chatgpt-health-has-arrived">OpenAI: 230M people ask ChatGPT health questions weekly</a></li>
-      <li><a href="https://medicaldialogues.in/one-doctor-for-every-1445-patients-in-india-still-behind-who-prescribed-11000-govt">India allopathic doctor ratio 1 : 1,445</a></li>
-      <li><a href="https://www.mdpi.com/2413-4155/8/4/73">Meta-analysis: AI 81% vs clinicians 71% diagnostic accuracy</a></li>
-      <li><a href="https://www.statnews.com/2026/04/01/ai-ambient-scribes-modest-time-savings-clinical-documentation/">STAT: AI scribes save about 16 min per 8 hours (the hype check)</a></li>
-    </ol>
+  <!-- CLOSE -->
+  <section class="close">
+    <h2>When intelligence gets cheap, everything gets <em>personal.</em></h2>
+    <details>
+      <summary>Sources and assumptions</summary>
+      <ol>
+        <li><a href="https://www.secondtalent.com/resources/how-much-software-written-by-ai/">Google: 25% (Oct 2024), 50% (fall 2025), 75% (Apr 2026) of new code by AI.</a> Beyond Apr 2026 is my projection.</li>
+        <li><a href="https://thenextweb.com/news/lovable-build-economy-500m-arr-vibe-coding">Lovable: 50M apps built, 80% of builders non-technical.</a></li>
+        <li><a href="https://allwork.space/2026/09/who-warns-aging-workforce-could-leave-67-countries-short-of-health-workers-by-2030/">WHO: 11.1M health worker shortage by 2030.</a></li>
+        <li><a href="https://medicaldialogues.in/one-doctor-for-every-1445-patients-in-india-still-behind-who-prescribed-11000-govt">India: 1 allopathic doctor per 1,445 people.</a> About 1.01M doctors vs 1.46M at the WHO norm. Gap = 1.46M × (1 − AI share) − 1.01M.</li>
+        <li><a href="https://thenextweb.com/news/chatgpt-health-has-arrived">OpenAI: 230M people ask ChatGPT health questions weekly.</a></li>
+        <li>Clinic is a toy model: 7 in 10 visits routine, 5 min routine, 15 min hard case. The phone apps are prebuilt demos.</li>
+      </ol>
+    </details>
+    <footer><span>Shubham Sahu</span><span>October 2026</span></footer>
   </section>
 </div>
 
 <script>
 const $=s=>document.querySelector(s);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const COL={accent:[124,140,255],hi:[185,193,255],coral:[255,107,84],mint:[63,217,160],amber:[255,194,75],ink:[238,240,250],grey:[58,65,96],faint:[30,35,58],bg:[13,17,32]};
-const rgb=(c,a=1)=>`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;
-const mix=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-const fmt=n=>Math.floor(n).toLocaleString('en-IN');
+const mix=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+const rgb=(c,a=1)=>`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;
+const fmt=n=>Math.round(n).toLocaleString('en-IN');
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function hsl(h,s,l){s/=100;l/=100;const k=n=>(n+h/30)%12,a=s*Math.min(l,1-l),f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));return[255*f(0),255*f(8),255*f(4)];}
 
-/* ---------- canvas module runner ---------- */
+/* theme tokens for canvas */
+let T={};
+function readT(){const cs=getComputedStyle(document.documentElement),h=n=>{const v=cs.getPropertyValue(n).trim();return[1,3,5].map(i=>parseInt(v.slice(i,i+2),16));};
+  T={bg:h('--bg'),surface:h('--surface'),fg:h('--fg'),muted:h('--muted'),line:h('--line'),soft:h('--soft'),accent:h('--accent'),danger:h('--danger'),ok:h('--ok')};}
+readT();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readT);
+new MutationObserver(readT).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+/* canvas runner */
 const mods=[];
-function mod(cv,o){
-  o.cv=cv;o.vis=true;mods.push(o);
+function mod(cv,o){o.cv=cv;o.vis=true;mods.push(o);
   const init=()=>{const r=cv.getBoundingClientRect();if(!r.width)return;const d=Math.min(2,devicePixelRatio||1);
-    cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);o.ctx=cv.getContext('2d');o.ctx.setTransform(d,0,0,d,0,0);
-    o.w=r.width;o.h=r.height;o.setup();o.draw(0.016);};
+    cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);o.ctx=cv.getContext('2d');o.ctx.setTransform(d,0,0,d,0,0);o.w=r.width;o.h=r.height;o.setup();o.draw(.016);};
   new ResizeObserver(init).observe(cv);init();
-  new IntersectionObserver(e=>{o.vis=e[0].isIntersecting}).observe(cv);
-  return o;
-}
+  new IntersectionObserver(e=>{o.vis=e[0].isIntersecting}).observe(cv);return o;}
 let last=performance.now();
-function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;for(const m of mods)if(m.vis&&m.ctx)m.draw(dt);tickCounters();requestAnimationFrame(loop);}
+function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;for(const m of mods)if(m.vis&&m.ctx)m.draw(dt);requestAnimationFrame(loop);}
 
-/* ---------- HERO particles ---------- */
-const heroEl=$('#hero');
+/* ---------- 1 · HERO FIELD ---------- */
+const field=$('#field');
 const hero=mod($('#heroCv'),{
   mode:0,g:0,auto:!RM,timer:0,mx:-1e4,my:-1e4,P:[],
-  setup(){
-    const{w,h}=this,mob=w<700,N=mob?1200:2600;
-    const S=mob?Math.min(w*.7,h*.38):Math.min(w*.34,h*.72),cx=mob?w/2:w*.73,cy=mob?h*.74:h*.5,R=S*.23;
-    // A: one giant app icon (rounded square with a play glyph)
-    const n=Math.ceil(Math.sqrt(N/.93))+1,sp=S/n,cand=[];
-    for(let r=0;r<n;r++)for(let c=0;c<n;c++){const x=-S/2+(c+.5)*sp,y=-S/2+(r+.5)*sp;
-      const dx=Math.max(Math.abs(x)-(S/2-R),0),dy=Math.max(Math.abs(y)-(S/2-R),0);if(dx*dx+dy*dy<=R*R)cand.push([x,y]);}
-    const tri=(x,y)=>{const ax=-.16*S,ay=-.22*S,bx=-.16*S,by=.22*S,qx=.24*S,qy=0;
-      const s1=(x-bx)*(ay-by)-(ax-bx)*(y-by),s2=(x-qx)*(by-qy)-(bx-qx)*(y-qy),s3=(x-ax)*(qy-ay)-(qx-ax)*(y-ay);
-      return !((s1<0||s2<0||s3<0)&&(s1>0||s2>0||s3>0));};
-    // B: a grid of tiny personal apps, each its own colour
-    const cols=Math.ceil(Math.sqrt(N*w/h)),rows=Math.ceil(N/cols),sx=w/cols,sy=h/rows;this.sb=Math.min(sx,sy)*.58;
-    const perm=[...Array(cols*rows).keys()].sort(()=>Math.random()-.5);
-    this.P=[];
-    for(let i=0;i<N;i++){
-      const a=cand[Math.floor(i*cand.length/N)],j=perm[i];
-      const hue=Math.random()*360;
-      this.P.push({ax:cx+a[0],ay:cy+a[1],bx:(j%cols+.5)*sx,by:(Math.floor(j/cols)+.5)*sy,
-        ca:tri(a[0],a[1])?COL.ink:COL.accent,cb:hsl(hue,75,66),d:Math.random()*.5,
-        swx:(Math.random()-.5)*160,swy:(Math.random()-.5)*160,ox:0,oy:0,vx:0,vy:0});
-    }
-    this.ctx.fillStyle=rgb(COL.bg);this.ctx.fillRect(0,0,w,h);
-  },
+  setup(){const{w,h}=this,N=w<500?900:1600,S=Math.min(w,h)*.5,cx=w/2,cy=h/2;
+    const n=Math.ceil(Math.sqrt(N)),sp=S/n;
+    const cols=Math.ceil(Math.sqrt(N*w/h)),rows=Math.ceil(N/cols),gx=(w-24)/cols,gy=(h-24)/rows;this.sb=Math.min(gx,gy)*.62;
+    const perm=[...Array(cols*rows).keys()].sort(()=>Math.random()-.5),me=Math.floor(N*.37);this.me=me;
+    this.P=[];for(let i=0;i<N;i++){const j=perm[i];
+      this.P.push({ax:cx-S/2+(i%n+.5)*sp,ay:cy-S/2+(Math.floor(i/n)+.5)*sp,bx:12+(j%cols+.5)*gx,by:12+(Math.floor(j/cols)+.5)*gy,
+        shade:.15+Math.random()*.85,d:Math.random()*.5,sw:(Math.random()-.5)*120,ox:0,oy:0,vx:0,vy:0});}},
   setMode(m,user){this.mode=m;if(user)this.auto=false;
     $('#mThen').setAttribute('aria-pressed',m===0);$('#mNow').setAttribute('aria-pressed',m===1);
-    $('#heroRead').textContent=m?'1,000,000 apps · 1 person each':'1 app · 1,000,000 people';},
-  draw(dt){
-    const{ctx,w,h}=this;
-    if(this.auto){this.timer+=dt;if(this.timer>4.6){this.timer=0;this.setMode(1-this.mode);}}
-    this.g=clamp(this.g+(this.mode?1:-1)*dt/(RM?.01:1.7),0,1);
-    ctx.fillStyle=RM?rgb(COL.bg):'rgba(13,17,32,.34)';ctx.fillRect(0,0,w,h);
-    const g=this.g,mx=this.mx,my=this.my;
-    for(const p of this.P){
-      const e=ease(clamp((g*1.5-p.d),0,1)),arc=Math.sin(Math.PI*e);
-      let x=p.ax+(p.bx-p.ax)*e+arc*p.swx,y=p.ay+(p.by-p.ay)*e+arc*p.swy;
+    $('#heroRead').textContent=m?'1,000,000 apps → 1 person each':'1 app → 1,000,000 people';},
+  draw(dt){const{ctx,w,h}=this;
+    if(this.auto){this.timer+=dt;if(this.timer>3.8){this.timer=0;this.setMode(1-this.mode);}}
+    this.g=clamp(this.g+(this.mode?1:-1)*dt/(RM?.01:1.4),0,1);
+    ctx.clearRect(0,0,w,h);
+    const g=this.g,mx=this.mx,my=this.my,base=mix(T.surface,T.fg,.12);
+    for(let i=0;i<this.P.length;i++){const p=this.P[i];
+      const e=ease(clamp(g*1.5-p.d,0,1)),arc=Math.sin(Math.PI*e);
+      let x=p.ax+(p.bx-p.ax)*e+arc*p.sw,y=p.ay+(p.by-p.ay)*e-arc*p.sw*.6;
       const dx=x+p.ox-mx,dy=y+p.oy-my,d2=dx*dx+dy*dy;
-      if(d2<11000&&d2>1){const d=Math.sqrt(d2),f=(105-d)/105*2.4;p.vx+=dx/d*f;p.vy+=dy/d*f;}
-      p.vx*=.86;p.vy*=.86;p.ox=(p.ox+p.vx)*.94;p.oy=(p.oy+p.vy)*.94;
-      x+=p.ox;y+=p.oy;
-      const s=2.2+(this.sb-2.2)*e;
-      ctx.fillStyle=rgb(mix(p.ca,p.cb,e));
+      if(d2<9000&&d2>1){const d=Math.sqrt(d2),f=(95-d)/95*2.6;p.vx+=dx/d*f;p.vy+=dy/d*f;}
+      p.vx*=.85;p.vy*=.85;p.ox=(p.ox+p.vx)*.93;p.oy=(p.oy+p.vy)*.93;x+=p.ox;y+=p.oy;
+      const s=2+(this.sb-2)*e;
+      const you=i===this.me&&e>.9;
+      ctx.fillStyle=you?rgb(T.accent):rgb(mix(T.fg,mix(base,T.fg,p.shade),e));
       ctx.fillRect(x-s/2,y-s/2,s,s);
-    }
-  }
+      if(you){ctx.strokeStyle=rgb(T.accent);ctx.lineWidth=1.5;ctx.strokeRect(x-s/2-5,y-s/2-5,s+10,s+10);
+        ctx.font='500 11px "JetBrains Mono",monospace';ctx.fillStyle=rgb(T.accent);ctx.fillText('you',x+s/2+9,y+4);}
+    }}
 });
-heroEl.addEventListener('pointermove',e=>{const r=hero.cv.getBoundingClientRect();hero.mx=e.clientX-r.left;hero.my=e.clientY-r.top;});
-heroEl.addEventListener('pointerleave',()=>{hero.mx=hero.my=-1e4;});
+const pt=e=>{const r=field.getBoundingClientRect();hero.mx=e.clientX-r.left;hero.my=e.clientY-r.top;};
+field.addEventListener('pointermove',pt);field.addEventListener('pointerdown',pt);
+field.addEventListener('pointerleave',()=>{hero.mx=hero.my=-1e4;});
 $('#mThen').onclick=()=>hero.setMode(0,true);$('#mNow').onclick=()=>hero.setMode(1,true);
 
-/* ---------- BUILD LAB ---------- */
+/* ---------- 2 · BUILD ---------- */
 const screen=$('#screen');
-const SAMPLE=t=>`<span class="a-sub">Sample data · ${t}</span>`;
-function spark(vals,lim,lo,hi){
-  const W=260,H=70,X=i=>8+i*(W-16)/Math.max(1,vals.length-1),Y=v=>H-6-(v-lo)/(hi-lo)*(H-12);
-  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:70px"><line x1="0" x2="${W}" y1="${Y(lim)}" y2="${Y(lim)}" stroke="#D2361F" stroke-dasharray="4 4" stroke-width="1.5"/>
-  <polyline fill="none" stroke="#2B3FE0" stroke-width="3" stroke-linejoin="round" points="${vals.map((v,i)=>X(i)+','+Y(clamp(v,lo,hi))).join(' ')}"/>
-  ${vals.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(clamp(v,lo,hi))}" r="4.5" fill="${v>lim?'#D2361F':'#11804D'}"/>`).join('')}</svg>`;
-}
+function spark(vals,lim,lo,hi){const W=260,H=70,X=i=>8+i*(W-16)/Math.max(1,vals.length-1),Y=v=>H-6-(clamp(v,lo,hi)-lo)/(hi-lo)*(H-12);
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:70px" aria-hidden="true"><line x1="0" x2="${W}" y1="${Y(lim)}" y2="${Y(lim)}" stroke="#DC2626" stroke-dasharray="3 4"/><polyline fill="none" stroke="#020617" stroke-width="2" points="${vals.map((v,i)=>X(i)+','+Y(v)).join(' ')}"/>${vals.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="4" fill="${v>lim?'#DC2626':'#15803D'}"/>`).join('')}</svg>`;}
 const APPS=[
- {re:/sugar|diabet|glucose|insulin|शुगर|madhumeh/,name:'SugarLog',render(el){
-   const rows=[['F',118],['A',204],['F',136],['A',168],['F',112]];
-   const lim=t=>t==='F'?130:180,lab=t=>t==='F'?'<span class="hi-t">खाली पेट</span> · Fasting':'<span class="hi-t">खाने के बाद</span> · After meal';
+ {re:/sugar|diabet|glucose|insulin|शुगर/,name:'SugarLog',render(el){
+   const rows=[['F',118],['A',204],['F',136],['A',168],['F',112]],lim=t=>t==='F'?130:180;
+   const lab=t=>t==='F'?'<span class="hi">खाली पेट</span> · Fasting':'<span class="hi">खाने के बाद</span> · After meal';
    const draw=()=>{const l=rows[rows.length-1],bad=l[1]>lim(l[0]);
-     el.innerHTML=`<div><div class="a-h"><span class="hi-t">पापा की शुगर</span></div><div class="a-sub">Dad's sugar · mg/dL</div></div>
-     <div class="a-card"><div class="a-row" style="justify-content:space-between"><span class="a-big" style="color:${bad?'var(--s-red)':'var(--s-green)'}">${l[1]}</span><span class="tag ${bad?'bad">ज़्यादा · High':'ok">ठीक · OK'}</span></div><div class="a-sub">${lab(l[0])}</div>${spark(rows.map(r=>r[1]),130,80,240)}</div>
-     <div class="a-row"><input class="a-in" id="sv" inputmode="numeric" placeholder="mg/dL" aria-label="Reading"><button class="a-btn" id="sf">खाली पेट</button><button class="a-btn alt" id="sa">खाने के बाद</button></div>
-     <div class="a-list">${rows.slice(-3).reverse().map(r=>`<div class="a-li"><span style="font-size:13px">${lab(r[0])}</span><b>${r[1]}</b></div>`).join('')}</div>
-     <div class="a-foot"><span>Flags: fasting &gt;130, after meal &gt;180</span><span>Users: 1</span></div>`;
+     el.innerHTML=`<div><div class="a-h hi">पापा की शुगर</div><div class="a-sub">Dad's sugar · mg/dL</div></div>
+     <div class="a-card"><div class="a-row" style="justify-content:space-between"><span class="a-big" style="color:${bad?'var(--s-red)':'var(--s-green)'}">${l[1]}</span><span class="tag ${bad?'bad">High':'ok">OK'}</span></div><div class="a-sub">${lab(l[0])}</div>${spark(rows.map(r=>r[1]),130,80,240)}</div>
+     <div class="a-row"><input class="a-in" id="sv" inputmode="numeric" placeholder="mg/dL" aria-label="Reading"><button class="a-btn hi" id="sf">खाली पेट</button><button class="a-btn alt hi" id="sa">खाने के बाद</button></div>
+     <div>${rows.slice(-3).reverse().map(r=>`<div class="a-li"><span style="font-size:13px">${lab(r[0])}</span><b>${r[1]}</b></div>`).join('')}</div>`;
      const add=t=>{const v=+el.querySelector('#sv').value;if(v>20&&v<600){rows.push([t,v]);draw();}};
-     el.querySelector('#sf').onclick=()=>add('F');el.querySelector('#sa').onclick=()=>add('A');};
-   draw();}},
- {re:/\bbp\b|blood pressure|pressure|हाई बीपी/,name:'BPLog',render(el){
+     el.querySelector('#sf').onclick=()=>add('F');el.querySelector('#sa').onclick=()=>add('A');};draw();}},
+ {re:/\bbp\b|blood pressure|pressure/,name:'BPLog',render(el){
    const rows=[[128,82],[146,94],[134,86]];
    const draw=()=>{const l=rows[rows.length-1],bad=l[0]>140||l[1]>90;
-     el.innerHTML=`<div><div class="a-h">Blood pressure</div><div class="a-sub">Flags anything above 140/90</div></div>
-     <div class="a-card"><div class="a-row" style="justify-content:space-between"><span class="a-big" style="font-size:48px;color:${bad?'var(--s-red)':'var(--s-green)'}">${l[0]}/${l[1]}</span><span class="tag ${bad?'bad">High':'ok">Normal'}</span></div>${spark(rows.map(r=>r[0]),140,100,180)}</div>
-     <div class="a-row"><input class="a-in" id="b1" inputmode="numeric" placeholder="Top" aria-label="Systolic"><input class="a-in" id="b2" inputmode="numeric" placeholder="Bottom" aria-label="Diastolic"><button class="a-btn" id="ba">Add</button></div>
-     ${SAMPLE('Users: 1')}`;
-     el.querySelector('#ba').onclick=()=>{const s=+el.querySelector('#b1').value,d=+el.querySelector('#b2').value;if(s&&d){rows.push([s,d]);draw();}};};
-   draw();}},
- {re:/split|trip|owe|friends|goa|share bill|hisaab/,name:'TripSplit',render(el){
+     el.innerHTML=`<div><div class="a-h">Blood pressure</div><div class="a-sub">Flags above 140/90</div></div>
+     <div class="a-card"><div class="a-row" style="justify-content:space-between"><span class="a-big" style="font-size:46px;color:${bad?'var(--s-red)':'var(--s-green)'}">${l[0]}/${l[1]}</span><span class="tag ${bad?'bad">High':'ok">OK'}</span></div>${spark(rows.map(r=>r[0]),140,100,180)}</div>
+     <div class="a-row"><input class="a-in" id="b1" inputmode="numeric" placeholder="Top" aria-label="Systolic"><input class="a-in" id="b2" inputmode="numeric" placeholder="Bottom" aria-label="Diastolic"><button class="a-btn" id="ba">Add</button></div>`;
+     el.querySelector('#ba').onclick=()=>{const s=+el.querySelector('#b1').value,d=+el.querySelector('#b2').value;if(s&&d){rows.push([s,d]);draw();}};};draw();}},
+ {re:/split|trip|owe|friends|goa/,name:'TripSplit',render(el){
    const ppl=[['Aarav',18000],['Meera',3200],['Kabir',6400],['Zoya',1600]];
-   const calc=()=>{const tot=ppl.reduce((a,p)=>a+p[1],0),each=tot/ppl.length;
-     const bal=ppl.map(p=>[p[0],p[1]-each]),cr=bal.filter(b=>b[1]>0.5).map(b=>[...b]),db=bal.filter(b=>b[1]<-0.5).map(b=>[b[0],-b[1]]),out=[];
-     let i=0,j=0;while(i<db.length&&j<cr.length){const m=Math.min(db[i][1],cr[j][1]);out.push(`${db[i][0]} → ${cr[j][0]}`+`<b>₹${fmt(Math.round(m))}</b>`);db[i][1]-=m;cr[j][1]-=m;if(db[i][1]<1)i++;if(cr[j][1]<1)j++;}
-     el.querySelector('#res').innerHTML=`<div class="a-sub">Total ₹${fmt(tot)} · ₹${fmt(Math.round(each))} each</div>`+out.map(o=>`<div class="a-li"><span>${o.split('<b>')[0]}</span><b>${o.split('<b>')[1]}</div>`).join('');};
-   el.innerHTML=`<div><div class="a-h">Goa trip 🌴</div><div class="a-sub">Who paid what. Edit any amount.</div></div>
-   <div class="a-card a-list">${ppl.map((p,i)=>`<div class="a-li"><span>${p[0]}</span><input class="a-in" style="max-width:110px;text-align:right" data-i="${i}" inputmode="numeric" value="${p[1]}" aria-label="${p[0]} paid"></div>`).join('')}</div>
-   <div class="a-card" id="res"></div>${SAMPLE('Users: 4 friends')}`;
+   el.innerHTML=`<div><div class="a-h">Goa trip</div><div class="a-sub">Edit what each person paid</div></div>
+   <div class="a-card" style="padding-block:4px">${ppl.map((p,i)=>`<div class="a-li"><span>${p[0]}</span><input class="a-in" style="max-width:110px;text-align:right" data-i="${i}" inputmode="numeric" value="${p[1]}" aria-label="${p[0]} paid"></div>`).join('')}</div><div class="a-card" id="res"></div>`;
+   const calc=()=>{const tot=ppl.reduce((a,p)=>a+p[1],0),each=tot/ppl.length,cr=[],db=[],out=[];
+     ppl.forEach(p=>{const b=p[1]-each;if(b>.5)cr.push([p[0],b]);else if(b<-.5)db.push([p[0],-b]);});
+     let i=0,j=0;while(i<db.length&&j<cr.length){const m=Math.min(db[i][1],cr[j][1]);out.push([db[i][0]+' → '+cr[j][0],m]);db[i][1]-=m;cr[j][1]-=m;if(db[i][1]<1)i++;if(cr[j][1]<1)j++;}
+     el.querySelector('#res').innerHTML=`<div class="a-sub">₹${fmt(tot)} total · ₹${fmt(each)} each</div>`+out.map(o=>`<div class="a-li"><span>${o[0]}</span><b>₹${fmt(o[1])}</b></div>`).join('');};
    el.querySelectorAll('input[data-i]').forEach(inp=>inp.oninput=()=>{ppl[+inp.dataset.i][1]=+inp.value||0;calc();});calc();}},
- {re:/exam|study|syllabus|countdown|test|jee|neet|upsc|boards/,name:'ExamClock',render(el){
-   const now=new Date();let ex=new Date(now.getFullYear(),10,30);if(ex<now)ex=new Date(now.getFullYear()+1,10,30);
-   el.innerHTML=`<div><div class="a-h">Exam countdown</div><div class="a-sub">Change the date or chapters</div></div>
-   <div class="a-row"><input class="a-in" type="date" id="ed" value="${ex.getFullYear()}-11-30" aria-label="Exam date"><input class="a-in" id="ec" inputmode="numeric" value="18" style="max-width:70px" aria-label="Chapters left"></div>
-   <div class="a-card"><div class="a-big" id="edays"></div><div class="a-sub">days left</div></div>
-   <div class="a-card"><div class="a-big" id="eper" style="color:var(--s-acc)"></div><div class="a-sub">chapters a day, then 5 days of revision</div></div>${SAMPLE('Users: 1')}`;
-   const up=()=>{const d=new Date(el.querySelector('#ed').value),days=Math.max(0,Math.ceil((d-new Date())/864e5)),c=+el.querySelector('#ec').value||0,st=Math.max(1,days-5);
-     el.querySelector('#edays').textContent=days;el.querySelector('#eper').textContent=(c/st).toFixed(1);};
-   el.querySelector('#ed').oninput=up;el.querySelector('#ec').oninput=up;up();}},
  {re:/water|drink|hydrat|paani|pani/,name:'Paani',render(el){
    const on=[1,1,1,1,1,0,0,0];
    const draw=()=>{const n=on.filter(Boolean).length;
-     el.innerHTML=`<div><div class="a-h">Mom's water</div><div class="a-sub"><span class="hi-t">पानी</span> · tap a glass when she drinks</div></div>
-     <div class="a-card" style="text-align:center"><span class="a-big" style="color:var(--s-acc)">${n}</span><span class="a-sub"> / 8 glasses</span></div>
+     el.innerHTML=`<div><div class="a-h">Mom's water</div><div class="a-sub"><span class="hi">पानी</span> · tap a glass</div></div>
+     <div class="a-card"><span class="a-big" style="color:var(--s-acc)">${n}</span><span class="a-sub"> of 8 glasses</span></div>
      <div class="glasses">${on.map((v,i)=>`<button class="glass ${v?'on':''}" data-i="${i}" aria-label="Glass ${i+1}"><i></i></button>`).join('')}</div>
-     <div class="a-sub" style="text-align:center">${n>=8?'Done for today 🎉':n>=5?'Almost there':'Next reminder in 45 min'}</div>${SAMPLE('Users: 1')}`;
-     el.querySelectorAll('.glass').forEach(b=>b.onclick=()=>{on[+b.dataset.i]^=1;draw();});};
-   draw();}},
- {re:/medicine|pill|tablet|dawa|dose|meds|goli/,name:'Dawa',render(el){
+     <div class="a-sub">${n>=8?'Done for today.':'Next reminder in 45 min'}</div>`;
+     el.querySelectorAll('.glass').forEach(b=>b.onclick=()=>{on[+b.dataset.i]^=1;draw();});};draw();}},
+ {re:/medicine|pill|tablet|dawa|dose|meds/,name:'Dawa',render(el){
    const meds=[['Sugar tablet','सुबह · Morning',1],['BP tablet','सुबह · Morning',1],['Vitamin D','दोपहर · Noon',0],['Sugar tablet','रात · Night',0]];
    const draw=()=>{const n=meds.filter(m=>m[2]).length,pc=n/meds.length;
-     el.innerHTML=`<div><div class="a-h">Grandpa's pills</div><div class="a-sub"><span class="hi-t">दवाई</span> · tick when taken</div></div>
-     <div class="a-card a-row" style="gap:16px"><svg viewBox="0 0 44 44" width="74" height="74"><circle cx="22" cy="22" r="18" fill="none" stroke="#E1E4EE" stroke-width="6"/><circle cx="22" cy="22" r="18" fill="none" stroke="#11804D" stroke-width="6" stroke-linecap="round" stroke-dasharray="${113*pc} 113" transform="rotate(-90 22 22)"/></svg><div><div class="a-big" style="font-size:40px">${n}/${meds.length}</div><div class="a-sub">taken today</div></div></div>
-     <div class="a-list">${meds.map((m,i)=>`<label class="chk"><input type="checkbox" data-i="${i}" ${m[2]?'checked':''}><span style="flex:1"><b>${m[0]}</b><br><span class="a-sub hi-t">${m[1]}</span></span></label>`).join('')}</div>${SAMPLE('Users: 1')}`;
-     el.querySelectorAll('input[data-i]').forEach(c=>c.onchange=()=>{meds[+c.dataset.i][2]=c.checked?1:0;draw();});};
-   draw();}},
- {re:/habit|gym|workout|run|streak|walk|yoga|read|meditat/,name:'Streak',render(el){
+     el.innerHTML=`<div><div class="a-h">Grandpa's pills</div><div class="a-sub"><span class="hi">दवाई</span> · tick when taken</div></div>
+     <div class="a-card a-row" style="gap:16px"><svg viewBox="0 0 44 44" width="72" height="72" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="#E2E8F0" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="#15803D" stroke-width="5" stroke-dasharray="${113*pc} 113" transform="rotate(-90 22 22)"/></svg><div><div class="a-big" style="font-size:40px">${n}/${meds.length}</div><div class="a-sub">taken today</div></div></div>
+     <div>${meds.map((m,i)=>`<label class="chk"><input type="checkbox" data-i="${i}" ${m[2]?'checked':''}><span><b>${m[0]}</b><br><span class="a-sub hi">${m[1]}</span></span></label>`).join('')}</div>`;
+     el.querySelectorAll('input[data-i]').forEach(c=>c.onchange=()=>{meds[+c.dataset.i][2]=c.checked?1:0;draw();});};draw();}},
+ {re:/habit|gym|workout|run|streak|walk|yoga/,name:'Streak',render(el){
    const d=Array.from({length:35},(_,i)=>i>=28||Math.random()>.3?1:0);
    const draw=()=>{let s=0;for(let i=d.length-1;i>=0&&d[i];i--)s++;
-     el.innerHTML=`<div><div class="a-h">Gym streak</div><div class="a-sub">Tap a day to mark it</div></div>
-     <div class="a-card"><span class="a-big" style="color:var(--s-green)">${s}</span><span class="a-sub"> day streak 🔥</span></div>
-     <div class="hgrid">${d.map((v,i)=>`<button class="${v?'on':''}" data-i="${i}" aria-label="Day ${i+1}"></button>`).join('')}</div>${SAMPLE('Users: 1')}`;
-     el.querySelectorAll('.hgrid button').forEach(b=>b.onclick=()=>{d[+b.dataset.i]^=1;draw();});};
-   draw();}},
- {re:/budget|salary|spend|money|expense|save|kharcha|₹/,name:'Kharcha',render(el){
-   const cats=[['Rent',18000,'#2B3FE0'],['Food',9000,'#11804D'],['Travel',4000,'#E8A317'],['Fun',6000,'#D2361F']];let inc=50000;
+     el.innerHTML=`<div><div class="a-h">Gym streak</div><div class="a-sub">Tap a day</div></div>
+     <div class="a-card"><span class="a-big" style="color:var(--s-green)">${s}</span><span class="a-sub"> days in a row</span></div>
+     <div class="hgrid">${d.map((v,i)=>`<button class="${v?'on':''}" data-i="${i}" aria-label="Day ${i+1}"></button>`).join('')}</div>`;
+     el.querySelectorAll('.hgrid button').forEach(b=>b.onclick=()=>{d[+b.dataset.i]^=1;draw();});};draw();}},
+ {re:/budget|salary|spend|money|expense|save|kharcha|₹/,name:'Budget',render(el){
+   const cats=[['Rent',18000,'#0369A1'],['Food',9000,'#15803D'],['Travel',4000,'#B45309'],['Fun',6000,'#DC2626']],inc=50000;
+   el.innerHTML=`<div><div class="a-h">₹50,000 a month</div><div class="a-sub">Drag to plan</div></div><div class="a-card a-row" id="bd" style="gap:14px"></div>
+   ${cats.map((c,i)=>`<div><div class="a-row" style="justify-content:space-between;font-size:13px"><b>${c[0]}</b><span id="bv${i}"></span></div><input class="a-rng" type="range" min="0" max="30000" step="500" value="${c[1]}" data-i="${i}" aria-label="${c[0]}"></div>`).join('')}`;
    const draw=()=>{const sp=cats.reduce((a,c)=>a+c[1],0),left=inc-sp;let acc=0;
      const arcs=cats.map(c=>{const f=c[1]/Math.max(inc,sp),s=`<circle cx="22" cy="22" r="16" fill="none" stroke="${c[2]}" stroke-width="8" stroke-dasharray="${100.5*f} 100.5" stroke-dashoffset="${-100.5*acc}" transform="rotate(-90 22 22)"/>`;acc+=f;return s;}).join('');
-     el.querySelector('#bd').innerHTML=`<svg viewBox="0 0 44 44" width="92" height="92"><circle cx="22" cy="22" r="16" fill="none" stroke="#E1E4EE" stroke-width="8"/>${arcs}</svg><div><div class="a-big" style="font-size:36px;color:${left<0?'var(--s-red)':'var(--s-green)'}">₹${fmt(Math.abs(left))}</div><div class="a-sub">${left<0?'over budget':'left to save'}</div></div>`;
+     el.querySelector('#bd').innerHTML=`<svg viewBox="0 0 44 44" width="88" height="88" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#E2E8F0" stroke-width="8"/>${arcs}</svg><div><div class="a-big" style="font-size:34px;color:${left<0?'var(--s-red)':'var(--s-green)'}">₹${fmt(Math.abs(left))}</div><div class="a-sub">${left<0?'over budget':'left to save'}</div></div>`;
      cats.forEach((c,i)=>el.querySelector('#bv'+i).textContent='₹'+fmt(c[1]));};
-   el.innerHTML=`<div><div class="a-h">Monthly budget</div><div class="a-sub">₹50,000 salary · drag to plan</div></div>
-   <div class="a-card a-row" id="bd" style="gap:14px"></div>
-   ${cats.map((c,i)=>`<div><div class="a-row" style="justify-content:space-between;font-size:13px"><b style="color:${c[2]}">${c[0]}</b><span id="bv${i}"></span></div><input class="a-rng" type="range" min="0" max="30000" step="500" value="${c[1]}" data-i="${i}" aria-label="${c[0]}"></div>`).join('')}${SAMPLE('Users: 1')}`;
    el.querySelectorAll('input[data-i]').forEach(r=>r.oninput=()=>{cats[+r.dataset.i][1]=+r.value;draw();});draw();}},
 ];
 const FALLBACK={name:'MyList',render(el,q){
-  const items=[['First thing to do',1],['Second thing',0],['Third thing',0]];
-  const title=q.length>40?q.slice(0,38)+'…':q;
-  const draw=()=>{el.innerHTML=`<div><div class="a-h">${esc(title.charAt(0).toUpperCase()+title.slice(1))}</div><div class="a-sub">Your own checklist</div></div>
+  const items=[['First thing',1],['Second thing',0],['Third thing',0]],title=q.length>36?q.slice(0,34)+'…':q;
+  const draw=()=>{el.innerHTML=`<div><div class="a-h">${esc(title.charAt(0).toUpperCase()+title.slice(1))}</div><div class="a-sub">Made for one person</div></div>
    <div class="a-row"><input class="a-in" id="fi" placeholder="Add an item" aria-label="New item"><button class="a-btn" id="fa">Add</button></div>
-   <div class="a-list">${items.map((it,i)=>`<label class="chk"><input type="checkbox" data-i="${i}" ${it[1]?'checked':''}><span>${esc(it[0])}</span></label>`).join('')}</div>${SAMPLE('Users: 1')}`;
+   <div>${items.map((it,i)=>`<label class="chk"><input type="checkbox" data-i="${i}" ${it[1]?'checked':''}><span>${esc(it[0])}</span></label>`).join('')}</div>`;
    el.querySelector('#fa').onclick=()=>{const v=el.querySelector('#fi').value.trim();if(v){items.unshift([v,0]);draw();}};
-   el.querySelectorAll('input[data-i]').forEach(c=>c.onchange=()=>{items[+c.dataset.i][1]=c.checked?1:0;});};
-  draw();}};
-let run=0,built=0;
-const sleep=ms=>new Promise(r=>setTimeout(r,RM?0:ms));
-async function build(q){
-  q=q.trim();if(!q)return;const id=++run,t0=performance.now();
-  const lq=q.toLowerCase(),A=APPS.find(a=>a.re.test(lq))||FALLBACK;
-  const steps=[...document.querySelectorAll('#steps li')];steps.forEach(s=>s.classList.remove('on'));
-  const slug=A.name.toLowerCase();
-  const lines=[`<span class="s">// "${esc(q)}"</span>`,`<span class="k">import</span> { screen, store } <span class="k">from</span> "./parts"`,`<span class="k">const</span> users = 1`,`<span class="k">const</span> data = store("${slug}")`,'',`<span class="k">export function</span> ${A.name}() {`,`  <span class="k">const</span> rows = data.use()`,`  <span class="k">return</span> screen(rows, {`,`    big: <span class="k">true</span>, ads: <span class="k">0</span>`,`  })`,`}`,'',`deploy({ users, store: <span class="k">false</span> })`];
-  screen.innerHTML='<div class="codestream" id="cs"></div>';const cs=$('#cs');
-  for(let i=0;i<lines.length;i++){if(id!==run)return;cs.innerHTML+=lines[i]+'\n';if(i%3===0)steps[Math.min(3,Math.floor(i/3.4))].classList.add('on');await sleep(85);}
-  steps.forEach(s=>s.classList.add('on'));await sleep(180);if(id!==run)return;
-  screen.innerHTML='<div class="app" id="appv"></div>';A.render($('#appv'),q);
-  built++;$('#sCount').textContent=built;$('#sTime').textContent=((performance.now()-t0)/1000).toFixed(1)+'s';
-}
-$('#askForm').addEventListener('submit',e=>{e.preventDefault();build($('#ask').value);});
-document.querySelectorAll('#chips .chip').forEach(c=>c.onclick=()=>{$('#ask').value=c.textContent;build(c.textContent);});
-// opening state: dad's sugar log already built
+   el.querySelectorAll('input[data-i]').forEach(c=>c.onchange=()=>{items[+c.dataset.i][1]=c.checked?1:0;});};draw();}};
+let run=0;const sleep=ms=>new Promise(r=>setTimeout(r,RM?0:ms));
+async function build(q){q=q.trim();if(!q)return;const id=++run,A=APPS.find(a=>a.re.test(q.toLowerCase()))||FALLBACK;
+  const L=[`<span class="c">// ${esc(q)}</span>`,`<span class="k">const</span> users = 1`,`<span class="k">const</span> data = store("${A.name.toLowerCase()}")`,'',`<span class="k">export function</span> ${A.name}() {`,`  <span class="k">return</span> screen(data, {`,`    big: <span class="k">true</span>,`,`    ads: <span class="k">0</span>,`,`  })`,`}`,'',`ship({ to: users })`];
+  screen.innerHTML='<div class="code" id="cs"></div>';const cs=$('#cs');
+  for(const l of L){if(id!==run)return;cs.innerHTML+=l+'\n';await sleep(70);}
+  await sleep(160);if(id!==run)return;screen.innerHTML='<div class="app" id="appv"></div>';A.render($('#appv'),q);}
+const chips=[...document.querySelectorAll('#chips .chip')];
+const ALIAS={'Sugar log for dad':'Sugar log for my diabetic dad','Goa trip split':'Split our Goa trip with 4 friends',"Mom's water":'Water reminder for my mom',"Grandpa's pills":'Pill tracker for grandpa','Budget on ₹50k':'Monthly budget on ₹50,000'};
+chips.forEach(c=>c.onclick=()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===c));const q=ALIAS[c.textContent]||c.textContent;$('#ask').value=q;build(q);});
+$('#askForm').addEventListener('submit',e=>{e.preventDefault();chips.forEach(x=>x.setAttribute('aria-pressed','false'));build($('#ask').value);});
 screen.innerHTML='<div class="app" id="appv"></div>';APPS[0].render($('#appv'),'');
-document.querySelectorAll('#steps li').forEach(s=>s.classList.add('on'));$('#ask').value='Sugar log for my diabetic dad';
 
-/* ---------- CODE WALL ---------- */
+/* ---------- 3 · CODE WALL ---------- */
 const K=Math.log(3)/6;
 const shareAt=m=>m<=12?25+25*m/12:m<=18?50+25*(m-12)/6:Math.min(95,100/(1+Math.exp(-K*(m-12))));
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const dateAt=m=>{const t=9+Math.floor(m);return MON[t%12]+' '+(2024+Math.floor(t/12));};
-const wall=mod($('#wallCv'),{
-  m:0,playing:false,B:[],
-  setup(){const{w,h}=this,colW=w<600?78:118,lh=7,cols=Math.floor((w-20)/colW),rows=Math.floor((h-20)/lh);this.B=[];
-    for(let c=0;c<cols;c++){let ind=0;for(let r=0;r<rows;r++){if(Math.random()<.18){continue;}ind=clamp(ind+(Math.random()<.2?1:Math.random()<.2?-1:0),0,3);
-      this.B.push({x:10+c*colW+ind*8,y:10+r*lh,len:(colW-24-ind*8)*(.25+Math.random()*.75),rank:Math.random(),c:0,f:0});}}
+const wall=mod($('#wallCv'),{m:0,playing:false,B:[],
+  setup(){const{w,h}=this,colW=w<500?74:104,lh=7,cols=Math.floor((w-24)/colW),rows=Math.floor((h-24)/lh);this.B=[];
+    for(let c=0;c<cols;c++){let ind=0;for(let r=0;r<rows;r++){if(Math.random()<.16)continue;ind=clamp(ind+(Math.random()<.2?1:Math.random()<.2?-1:0),0,3);
+      this.B.push({x:12+c*colW+ind*8,y:12+r*lh,len:(colW-22-ind*8)*(.25+Math.random()*.75),rank:Math.random(),c:0,f:0});}}
     const s=shareAt(this.m)/100;this.B.forEach(b=>b.c=b.rank<s?1:0);},
   draw(dt){const{ctx,w,h}=this;
-    if(this.playing){this.m=Math.min(30,this.m+dt*3.2);$('#when').value=this.m;if(this.m>=30){this.playing=false;$('#wallPlay').textContent='↺ Replay';}updWall();}
-    const s=shareAt(this.m)/100,proj=this.m>18;
-    ctx.fillStyle=rgb(COL.bg);ctx.fillRect(0,0,w,h);
+    if(this.playing){this.m=Math.min(30,this.m+dt*3.4);$('#when').value=this.m;if(this.m>=30)setPlay(false);updWall();}
+    const s=shareAt(this.m)/100,human=mix(T.surface,T.muted,.3);
+    ctx.clearRect(0,0,w,h);
     for(const b of this.B){const t=b.rank<s?1:0;
-      if(Math.abs(t-b.c)>.01){b.c+=(t-b.c)*Math.min(1,dt*7);if(t===1&&b.f<=0&&Math.random()<.5)b.f=1;}
-      b.f=Math.max(0,b.f-dt*2.2);
-      const aiC=proj&&b.rank>.75?COL.amber:COL.accent;
-      let col=mix(COL.grey,aiC,b.c);if(b.f>0)col=mix(col,COL.ink,b.f);
+      if(Math.abs(t-b.c)>.01){b.c+=(t-b.c)*Math.min(1,dt*7);if(t&&b.f<=0&&Math.random()<.5)b.f=1;}
+      b.f=Math.max(0,b.f-dt*2.4);
+      const ai=b.rank>.75?mix(T.surface,T.accent,.5):T.accent;
+      let col=mix(human,ai,b.c);if(b.f>0)col=mix(col,T.fg,b.f*.8);
       ctx.fillStyle=rgb(col);ctx.fillRect(b.x,b.y,b.len,4);}
-    if(!RM&&s>0){for(let i=0;i<3;i++){const b=this.B[(Math.random()*this.B.length)|0];if(b&&b.rank<s)b.f=Math.max(b.f,.6);}}
-  }
+    if(!RM){for(let i=0;i<2;i++){const b=this.B[(Math.random()*this.B.length)|0];if(b&&b.rank<s)b.f=Math.max(b.f,.5);}}}
 });
-function updWall(){const m=wall.m,s=shareAt(m),proj=m>18.01;
-  $('#wallPct').textContent=Math.round(s)+'%';$('#wallDate').textContent=dateAt(m);
-  const tg=$('#wallTag');tg.textContent=proj?'My projection':'Reported';tg.classList.toggle('proj',proj);
-  $('#wallPct').style.color=proj?'var(--amber)':'var(--accent)';
-  $('#wallCursor')&&($('#wallCursor').setAttribute('cx',m/30*600),$('#wallCursor').setAttribute('cy',56-shareAt(m)/100*52));}
-(function(){let a='',b='';for(let m=0;m<=30;m+=.5){const p=(m/30*600).toFixed(1)+','+(56-shareAt(m)/100*52).toFixed(1);if(m<=18)a+=p+' ';if(m>=18)b+=p+' ';}
-  $('#wallSpark').innerHTML=`<polyline points="${a}" fill="none" stroke="#7C8CFF" stroke-width="2.5" vector-effect="non-scaling-stroke"/><polyline points="${b}" fill="none" stroke="#FFC24B" stroke-width="2.5" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"/><circle id="wallCursor" r="5" fill="#EEF0FA" cx="0" cy="${56-25/100*52}"/>`;})();
-$('#when').addEventListener('input',e=>{wall.m=+e.target.value;wall.playing=false;$('#wallPlay').textContent='▶ Play';updWall();});
-$('#wallPlay').onclick=()=>{if(wall.m>=30)wall.m=0;wall.playing=!wall.playing;$('#wallPlay').textContent=wall.playing?'❚❚ Pause':'▶ Play';};
+function setPlay(on){wall.playing=on;$('#wallPlay').setAttribute('aria-label',on?'Pause':'Play');
+  $('#playIcon').innerHTML=on?'<path d="M2 1h3.5v12H2zM8.5 1H12v12H8.5z"/>':'<path d="M2 1l11 6-11 6z"/>';}
+function updWall(){const m=wall.m,proj=m>18.01;$('#wallPct').textContent=Math.round(shareAt(m))+'%';$('#wallDate').textContent=dateAt(m);
+  $('#wallTag').textContent=proj?'Projection':'Reported';$('#wallPct').style.color=proj?'var(--muted)':'var(--fg)';}
+$('#when').addEventListener('input',e=>{wall.m=+e.target.value;setPlay(false);updWall();});
+$('#wallPlay').onclick=()=>{if(wall.m>=30)wall.m=0;setPlay(!wall.playing);};
 updWall();
 
-/* ---------- LIVE COUNTERS ---------- */
-const t0=performance.now();let lastC=0;
-function tickCounters(){const t=performance.now();if(t-lastC<90)return;lastC=t;const s=(t-t0)/1000;
-  $('#cApps').textContent=fmt(s*100000/86400);$('#cHealth').textContent=fmt(s*230e6/604800);}
-
-/* ---------- CLINIC SIM ---------- */
-const clinic=mod($('#clinicCv'),{
-  ai:0,rush:0,P:[],q:[],next:.2,simT:0,away:0,waits:[],work:[],acc:0,
-  setup(){const{w,h}=this,mob=w<600;
-    this.L={inX:-10,inY:h*.66,wx0:mob?16:w*.06,wx1:w*(mob?.58:.6),wy0:h*.36,wy1:h*.95,aiY:h*.14,dx:w*(mob?.8:.78)};
+/* ---------- 4 · CLINIC ---------- */
+const clinic=mod($('#clinicCv'),{ai:0,rush:0,P:[],q:[],next:.2,simT:0,away:0,acc:0,
+  setup(){const{w,h}=this,mob=w<500;
+    this.L={inY:h*.62,wx0:mob?14:w*.06,wx1:w*(mob?.6:.62),wy0:h*.32,wy1:h*.94,aiY:h*.12,dx:w*(mob?.8:.8)};
     this.sp=mob?11:14;this.perRow=Math.max(4,Math.floor((this.L.wx1-this.L.wx0)/this.sp));
     this.cap=this.perRow*Math.max(2,Math.floor((this.L.wy1-this.L.wy0-14)/this.sp));
-    const old=this.desks||[];this.desks=[0,1,2,3].map(i=>({x:this.L.dx,y:h*.42+i*(h*.5/3),p:old[i]?old[i].p:null,rem:old[i]?old[i].rem:0,tot:old[i]?old[i].tot:1}));},
+    const old=this.desks||[];this.desks=[0,1,2,3].map(i=>({x:this.L.dx,y:h*.38+i*(h*.52/3),p:old[i]?old[i].p:null,rem:old[i]?old[i].rem:0,tot:old[i]?old[i].tot:1}));},
   slot(i){const r=Math.floor(i/this.perRow);let c=i%this.perRow;if(r%2)c=this.perRow-1-c;return[this.L.wx1-c*this.sp,this.L.wy0+14+r*this.sp];},
-  spawn(){const L=this.L,type=Math.random()<.7?'r':'c',p={x:L.inX,y:L.inY,type,arr:this.simT,a:1};
-    if(type==='r'&&Math.random()<this.ai/100){p.st='ai';p.t=0;this.waits.push(0);}
-    else if(this.q.length>=this.cap){p.st='away';this.away++;}
-    else{p.st='q';this.q.push(p);}
+  spawn(){const L=this.L,type=Math.random()<.7?'r':'c',p={x:-10,y:L.inY,type,a:1};
+    if(type==='r'&&Math.random()<this.ai/100){p.st='ai';p.t=0;}else if(this.q.length>=this.cap){p.st='away';this.away++;}else{p.st='q';this.q.push(p);}
     this.P.push(p);},
   draw(dt){const{ctx,w,h}=this,L=this.L;this.simT+=dt;
-    if(this.rush>0){this.rush-=dt;if(this.rush<=0){$('#rush').setAttribute('aria-pressed','false');}}
+    if(this.rush>0){this.rush-=dt;if(this.rush<=0)$('#rush').setAttribute('aria-pressed','false');}
     const lam=3*(this.rush>0?1.8:1);this.next-=dt;while(this.next<=0){this.spawn();this.next+=-Math.log(1-Math.random())/lam;}
     for(const d of this.desks){if(d.p){d.rem-=dt;if(d.rem<=0){d.p.st='out';d.p=null;}}
-      if(!d.p&&this.q.length){const p=this.q.shift();p.st='desk';p.desk=d;d.p=p;d.tot=d.rem=(p.type==='r'?1:3)*(.7+Math.random()*.6);
-        this.waits.push(this.simT-p.arr);this.work.push([p.type,d.tot]);if(this.work.length>40)this.work.shift();}}
-    if(this.waits.length>40)this.waits.splice(0,this.waits.length-40);
-    // move
-    const k=Math.min(1,dt*7);
-    this.q.forEach((p,i)=>{const s=this.slot(i);p.tx=s[0];p.ty=s[1];});
+      if(!d.p&&this.q.length){const p=this.q.shift();p.st='desk';p.desk=d;d.p=p;d.tot=d.rem=(p.type==='r'?1:3)*(.7+Math.random()*.6);}}
+    const k=Math.min(1,dt*6);this.q.forEach((p,i)=>{const s=this.slot(i);p.tx=s[0];p.ty=s[1];});
     for(const p of this.P){
-      if(p.st==='desk'){p.tx=p.desk.x-22;p.ty=p.desk.y;}
-      else if(p.st==='out'){p.tx=w+30;p.ty=p.y;}
-      else if(p.st==='away'){p.tx=-30;p.ty=L.inY+20;p.a-=dt*.6;}
-      if(p.st==='ai'){p.t+=dt/.9;const t=p.t;if(t<.22){const e=t/.22;p.x=L.inX+(w*.08-L.inX)*e;p.y=L.inY+(L.aiY-L.inY)*e;}else{const e=(t-.22)/.78;p.x=w*.08+(w+30-w*.08)*e;p.y=L.aiY;}if(p.t>=1)p.dead=1;}
-      else{p.x+=(p.tx-p.x)*k*(p.st==='q'?.8:1);p.y+=(p.ty-p.y)*k*(p.st==='q'?.8:1);}
+      if(p.st==='desk'){p.tx=p.desk.x-24;p.ty=p.desk.y;}else if(p.st==='out'){p.tx=w+30;p.ty=p.y;}else if(p.st==='away'){p.tx=-30;p.ty=L.inY+24;p.a-=dt*.7;}
+      if(p.st==='ai'){p.t+=dt/.9;const t=p.t;if(t<.22){const e=t/.22;p.x=-10+(w*.08+10)*e;p.y=L.inY+(L.aiY-L.inY)*e;}else{p.x=w*.08+(w+30-w*.08)*(t-.22)/.78;p.y=L.aiY;}if(t>=1)p.dead=1;}
+      else{p.x+=(p.tx-p.x)*k;p.y+=(p.ty-p.y)*k;}
       if((p.st==='out'&&p.x>w+20)||p.a<=0)p.dead=1;}
     this.P=this.P.filter(p=>!p.dead);
-    // paint
-    ctx.fillStyle=rgb(COL.bg);ctx.fillRect(0,0,w,h);
-    ctx.font='600 11px "JetBrains Mono",monospace';ctx.textBaseline='alphabetic';
-    // AI lane
-    const aa=.12+this.ai/100*.6;ctx.strokeStyle=rgb(COL.mint,aa);ctx.lineWidth=14;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(w*.08,L.aiY);ctx.lineTo(w-14,L.aiY);ctx.stroke();
-    ctx.fillStyle=rgb(COL.mint,.4+this.ai/200);ctx.fillText('AI TRIAGE LANE · ROUTINE VISITS',w*.08,L.aiY-16);
-    // waiting room
-    ctx.strokeStyle=rgb(COL.grey);ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.strokeRect(L.wx0-10,L.wy0,L.wx1-L.wx0+20,L.wy1-L.wy0);ctx.setLineDash([]);
-    const full=this.q.length/this.cap;ctx.fillStyle=full>.85?rgb(COL.coral):rgb(COL.muted||[140,148,176]);ctx.fillText(full>.85?'WAITING ROOM · FULL':'WAITING ROOM',L.wx0-10,L.wy0-8);
-    ctx.fillStyle=rgb([140,148,176]);ctx.fillText('DOCTORS',L.dx-30,L.wy0-8);
-    for(const d of this.desks){ctx.fillStyle=rgb(COL.faint);ctx.beginPath();ctx.roundRect(d.x-8,d.y-15,38,30,8);ctx.fill();
-      ctx.fillStyle=rgb(COL.ink);ctx.beginPath();ctx.arc(d.x+18,d.y,7,0,7);ctx.fill();
-      if(d.p){ctx.strokeStyle=rgb(d.p.type==='c'?COL.amber:COL.hi);ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(d.x+18,d.y,11.5,-Math.PI/2,-Math.PI/2+Math.PI*2*(1-d.rem/d.tot));ctx.stroke();}}
-    for(const p of this.P){const c=p.st==='ai'?COL.mint:p.type==='c'?COL.amber:COL.hi;
-      if(p.st==='ai'){ctx.fillStyle=rgb(COL.mint,.25);ctx.fillRect(p.x-26,p.y-2,24,4);}
-      ctx.globalAlpha=Math.max(0,p.a);ctx.fillStyle=rgb(c);ctx.beginPath();ctx.arc(p.x,p.y,4.4,0,7);ctx.fill();ctx.globalAlpha=1;}
-    // tiles
+    ctx.clearRect(0,0,w,h);ctx.font='500 11px "JetBrains Mono",monospace';
+    const routine=mix(T.surface,T.muted,.55);
+    ctx.strokeStyle=rgb(T.accent,.25+this.ai/140);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(w*.08,L.aiY);ctx.lineTo(w-12,L.aiY);ctx.stroke();
+    ctx.fillStyle=rgb(T.accent);ctx.fillText('AI',w*.08,L.aiY-12);
+    const full=this.q.length/this.cap;
+    ctx.strokeStyle=rgb(full>.85?T.danger:T.line);ctx.lineWidth=1;ctx.strokeRect(L.wx0-8,L.wy0,L.wx1-L.wx0+16,L.wy1-L.wy0);
+    ctx.fillStyle=rgb(full>.85?T.danger:T.muted);ctx.fillText(full>.85?'Waiting room full':'Waiting room',L.wx0-8,L.wy0-10);
+    ctx.fillStyle=rgb(T.muted);ctx.fillText('Doctors',L.dx-6,L.wy0-10);
+    for(const d of this.desks){ctx.fillStyle=rgb(T.fg);ctx.fillRect(d.x,d.y-8,16,16);
+      if(d.p){ctx.strokeStyle=rgb(T.accent);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(d.x-4,d.y+14);ctx.lineTo(d.x-4+24*(1-d.rem/d.tot),d.y+14);ctx.stroke();}}
+    for(const p of this.P){ctx.globalAlpha=Math.max(0,p.a);ctx.fillStyle=rgb(p.st==='ai'?T.accent:p.type==='c'?T.fg:routine);
+      ctx.beginPath();ctx.arc(p.x,p.y,4.2,0,7);ctx.fill();ctx.globalAlpha=1;}
     this.acc+=dt;if(this.acc>.25){this.acc=0;
-      $('#tWait').textContent=this.q.length;$('#tWait').style.color=full>.85?'var(--coral)':'var(--ink)';
-      const avg=this.waits.length?this.waits.reduce((a,b)=>a+b,0)/this.waits.length*5:0;$('#tAvg').textContent=Math.round(avg)+' min';
-      $('#tAway').textContent=fmt(this.away);
-      const tw=this.work.reduce((a,x)=>a+x[1],0),hw=this.work.filter(x=>x[0]==='c').reduce((a,x)=>a+x[1],0);
-      const hp=tw?hw/tw*100:0;$('#tHard').textContent=Math.round(hp)+'%';$('#tHard').style.color=hp>80?'var(--mint)':'var(--ink)';}
-  }
+      const tw=$('#tWait');tw.textContent=this.q.length;tw.style.color=full>.85?'var(--danger)':'var(--fg)';
+      const ta=$('#tAway');ta.textContent=fmt(this.away);ta.style.color=this.away?'var(--danger)':'var(--fg)';}}
 });
-$('#aiShare').addEventListener('input',e=>{clinic.ai=+e.target.value;$('#aiV').textContent=e.target.value+'%';});
+function updAI(){const v=+$('#aiShare').value;clinic.ai=v;$('#aiV').textContent=v+'%';
+  const gap=1.46*(1-v/100)-1.01,g=$('#tGap');
+  if(gap>0.004){g.textContent=fmt(gap*1000)+'K';g.style.color='var(--danger)';}else{g.textContent='0';g.style.color='var(--ok)';}}
+$('#aiShare').addEventListener('input',updAI);updAI();
 $('#rush').onclick=()=>{clinic.rush=8;$('#rush').setAttribute('aria-pressed','true');};
 
-/* ---------- DOT GRID ---------- */
-const HAVE=1010,NEED=1460;
-const dots=mod($('#dotCv'),{
-  share:0,D:[],
-  setup(){const{w,h}=this;let g=Math.sqrt(w*h/NEED);let cols=Math.floor(w/g);let rows=Math.ceil(NEED/cols);while(rows*g>h){g*=.98;cols=Math.floor(w/g);rows=Math.ceil(NEED/cols);}
-    this.g=g;this.cols=cols;this.ox=(w-cols*g)/2+g/2;this.oy=(h-rows*g)/2+g/2;
-    if(this.D.length!==NEED)this.D=Array.from({length:NEED},()=>({c:[...COL.ink],ring:0}));},
-  draw(dt){const{ctx,w,h,g}=this,need=NEED*(1-this.share),k=Math.min(1,dt*5);
-    ctx.fillStyle=rgb(COL.bg);ctx.fillRect(0,0,w,h);
-    for(let i=0;i<NEED;i++){const d=this.D[i];let tc,tr;
-      if(i<Math.min(need,HAVE)){tc=COL.ink;tr=0;}else if(i<HAVE){tc=COL.mint;tr=0;}else if(i<need){tc=COL.coral;tr=1;}else{tc=COL.faint;tr=0;}
-      d.c=mix(d.c,tc,k);d.ring+=(tr-d.ring)*k;
-      const x=this.ox+(i%this.cols)*g,y=this.oy+Math.floor(i/this.cols)*g,r=g*.32;
-      ctx.beginPath();ctx.arc(x,y,r,0,7);
-      if(d.ring>.5){ctx.strokeStyle=rgb(d.c);ctx.lineWidth=Math.max(1,g*.1);ctx.stroke();}else{ctx.fillStyle=rgb(d.c);ctx.fill();}}
-  }
-});
-function updDots(){const s=+$('#dShare').value/100;dots.share=s;$('#dV').textContent=Math.round(s*100)+'%';
-  const need=1.46*(1-s),gap=need-1.01;$('#dNeed').textContent=need.toFixed(2)+'M';
-  const v=$('#dVerdict');if(gap>0.004){v.style.color='var(--coral)';v.textContent=`${fmt(gap*1000)}K doctors missing`;}
-  else{v.style.color='var(--mint)';v.textContent=`Gap closed. ${fmt(-gap*1000)}K doctors freed for hard cases.`;}}
-$('#dShare').addEventListener('input',updDots);updDots();
-
-/* ---------- vote + progress ---------- */
-const MSG={Education:'A tutor that knows exactly where you are stuck. Tell me why in the comments.',Law:'A lawyer for the ₹2,000 problem nobody takes. Tell me why in the comments.',Banking:'A bank that speaks your language and your budget. Tell me why in the comments.',Insurance:'A policy written for one life, not an actuarial table. Tell me why in the comments.',Media:'A newspaper written for one reader. Tell me why in the comments.',Retail:'A store that stocks only what you need. Tell me why in the comments.'};
-document.querySelectorAll('#vote button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#vote button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#voteMsg').textContent=MSG[b.textContent];});
 addEventListener('scroll',()=>{const d=document.documentElement;$('#prog').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';},{passive:true});
-
 requestAnimationFrame(loop);
 </script>
 
